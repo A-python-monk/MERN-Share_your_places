@@ -9,6 +9,7 @@ import Newplace from "./places/pages/NewPlaces";
 import UpdatePlace from "./places/pages/UpdatePlace";
 import UserPlaces from "./places/pages/UserPlaces";
 import MainNavigation from "./shared/components/UIComponents/Navigation/MainNavigation";
+import Authorise from "./user/pages/auth";
 import Users from "./user/pages/Users";
 
 const App = () => {
@@ -28,6 +29,9 @@ const App = () => {
         </Route>
         <Route path="/places/:placeId">
           <UpdatePlace />
+        </Route>
+        <Route path="/auth" exact>
+          <Authorise/>
         </Route>
         <Redirect to="/" />
       </Switch>
