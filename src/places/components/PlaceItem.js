@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import AuthContext from "../../shared/components/context/auth-context";
 import Modal from "../../shared/components/Modal";
 import Card from "../../shared/components/UIComponents/Card";
 import Button from "../../shared/components/UIComponents/FormsElements/Button";
@@ -25,6 +26,8 @@ const PlaceItem = (props) => {
   const confirmDeleteHandler = () => {
     console.log("Deleting");
   };
+
+  const auth = useContext(AuthContext);
 
   return (
     <React.Fragment>
@@ -71,13 +74,14 @@ const PlaceItem = (props) => {
               {" "}
               VIEW ON MAP
             </Button>
-            <Button to={`/places/${props.id}`}> EDIT</Button>
-            <Button danger onClick={showDeleteWarningHandler}> DELETE</Button>
+            {auth.isLoggedIn &&
+            <Button to={`/places/${props.id}`}> EDIT</Button>}
+            {auth.isLoggedIn &&
+            <Button danger onClick={showDeleteWarningHandler}> DELETE</Button>}
           </div>
         </Card>
       </li>
     </React.Fragment>
   );
-};
-
+            };
 export default PlaceItem;

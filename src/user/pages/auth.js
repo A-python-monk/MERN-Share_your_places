@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { useForm } from "../../shared/hooks/form-hook";
 import Input from "../../shared/components/UIComponents/FormsElements/Input";
@@ -11,16 +11,14 @@ import {
 
 import "./auth.css";
 import Card from "../../shared/components/UIComponents/Card";
+import AuthContext from "../../shared/components/context/auth-context";
 
 const Authorise = () => {
   const [isLogin, setisLogin] = useState(true);
+  const auth = useContext(AuthContext);
 
   const [formState, inputHandler, setFormData] = useForm(
     {
-      name: {
-        value: "",
-        isValid: false,
-      },
       email: {
         value: "",
         isValid: false,
@@ -36,16 +34,17 @@ const Authorise = () => {
   const switchModeHandler = () => {
     if (!isLogin) {
       setFormData(
-        { ...formState.inputs,
-          name: undefined },
+        { ...formState.inputs, name: undefined },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
-    } 
-    else{
-      setFormData({
-        ...formState.inputs,
-        name:{value:"",isValid:false}
-      },false)
+    } else {
+      setFormData(
+        {
+          ...formState.inputs,
+          name: { value: "", isValid: false },
+        },
+        false
+      );
     }
     setisLogin((prevMode) => !prevMode);
   };
@@ -53,6 +52,9 @@ const Authorise = () => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     console.log(formState.inputs);
+    console.log(auth.isLoggedIn);
+    auth.login();
+    console.log(auth.isLoggedIn);
   };
 
   return (
